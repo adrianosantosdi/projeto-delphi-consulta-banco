@@ -1,0 +1,68 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    rdgConsulta: TRadioGroup;
+    edtConsulta: TEdit;
+    lblConsulta: TLabel;
+    btnConsulta: TButton;
+    DBGrid1: TDBGrid;
+    procedure rdgConsultaClick(Sender: TObject);
+    procedure btnConsultaClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+uses unitDM;
+
+procedure TForm1.btnConsultaClick(Sender: TObject);
+begin
+  DM.QRY_.Close;
+  DM.QRY_.SQL.Clear;
+
+  if (rdgConsulta.ItemIndex = 0) then
+   begin
+     DM.QRY_.SQL.Add('SELECT * FROM clientes WHERE nome LIKE :pConsulta');
+     DM.QRY_.ParamByName('pConsulta').AsString := edtConsulta.Text + '%';
+   end;
+
+   if (rdgConsulta.ItemIndex = 1) then
+   begin
+     DM.QRY_.SQL.Add('SELECT * FROM clientes WHERE bairro LIKE :pConsulta');
+     DM.QRY_.ParamByName('pConsulta').AsString := edtConsulta.Text+'%';
+   end;
+
+  DM.QRY_.Open();
+end;
+
+procedure TForm1.rdgConsultaClick(Sender: TObject);
+begin
+  if (rdgConsulta.ItemIndex = 0) then
+  begin
+    lblConsulta.Caption := 'Digite seu nome';
+  end;
+
+  if (rdgConsulta.ItemIndex = 1) then
+  begin
+    lblConsulta.Caption := 'Digite seu Bairro';
+  end;
+
+end;
+
+end.

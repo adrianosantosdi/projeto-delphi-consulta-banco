@@ -1,0 +1,13 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 568
+  Width = 797
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    Left = 704
+    Top = 32
+  end
+  object FDConnection1: TFDConnection
+    Left = 48
+    Top = 48
+  end
+end
